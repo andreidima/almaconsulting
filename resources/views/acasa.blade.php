@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 mb-5">
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6 mb-3">
             <div class="card culoare2">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-md-4 mb-3">
             <div class="card culoare2">
                 <div class="card-header text-center">Proiecte luna trecută</div>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 mb-3">
+        {{-- <div class="col-md-12 mb-3">
             <div class="table-responsive rounded">
                 <table class="table table-striped table-hover rounded">
                     <thead class="text-white rounded">
@@ -65,7 +65,40 @@
                     </tbody>
                 </table>
             </div>
+        </div> --}}
+
+        <div class="col-md-6 mb-3 text-center mx-auto">
+            <div class="table-responsive rounded">
+                <table class="table table-striped table-hover rounded">
+                    <thead class="text-white rounded">
+                    {{-- Column headers --}}
+                    <tr class="thead-danger" style="padding:2rem">
+                        <th class="text-white culoare2 text-center" style="width:70%">
+                        Stare proiect
+                        </th>
+                        <th class="text-white culoare2 text-center" style="width:30%">
+                        Total
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($proiecteGroupedByStareContract as $stareContract)
+                        <tr>
+                        <td class="" style="vertical-align:middle">
+                            {{ $stareContract->stare_contract ?? '-' }}
+                        </td>
+                        <td class="text-center">
+                            <b class="">{{ $stareContract->total }}</b>
+                        </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                </div>
+
         </div>
+
+
     </div>
 </div>
 
