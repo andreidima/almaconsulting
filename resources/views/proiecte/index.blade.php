@@ -396,7 +396,7 @@ Alma Consulting</textarea>
             <div class="modal-content">
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white" id="stergeProiectLabel{{ $proiect->id }}">
-                        <i class="fa-solid fa-trash me-1"></i> {{ $proiectTip->nume }}: <b>{{ $proiect->denumire_contract }}</b>
+                        <i class="fa-solid fa-trash me-1"></i> {{ $proiectTip->nume }}: {{ $proiect->denumire_contract }}
                     </h5>
                     <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

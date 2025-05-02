@@ -109,7 +109,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-danger">
                     <h5 class="modal-title text-white" id="stergeSubcontractantLabel{{ $subcontractant->id }}">
-                        <i class="fa-solid fa-user-times me-1"></i> Subcontractant: <b>{{ $subcontractant->nume }}</b>
+                        <i class="fa-solid fa-user-times me-1"></i> Subcontractant: {{ $subcontractant->nume }}
                     </h5>
                     <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
