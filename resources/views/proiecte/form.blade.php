@@ -363,6 +363,9 @@
             name="comentarii"
             id="comentarii"
             rows="5">{{ old('comentarii', $proiect->comentarii ?? '') }}</textarea>
+        <small class="form-text text-muted ps-3">
+            La fiecare modificare a comentariilor, toți membrii vor fi automat informați prin email.
+        </small>
     </div>
 
     <div class="col-lg-12 mb-4">
