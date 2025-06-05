@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@php use Illuminate\Support\Str; @endphp
 
 @section('content')
 <div class="container">
@@ -40,64 +41,32 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        {{-- <div class="col-md-12 mb-3">
-            <div class="table-responsive rounded">
-                <table class="table table-striped table-hover rounded">
-                    <thead class="text-white rounded">
-                        <tr class="thead-danger" style="padding:2rem">
-                            <th class="text-white culoare2 text-center" colspan="{{ $proiecteGroupedByStareContract->count() }}">Stare proiecte</th>
-                        </tr>
-                        <tr class="thead-danger" style="padding:2rem">
-                            @foreach ($proiecteGroupedByStareContract as $stareContract)
-                                <th class="text-white culoare2 text-center" style="width:{{ 100/$proiecteGroupedByStareContract->count() }}%">
-                                    {{ $stareContract->stare_contract ?? '-'}}
-                                </th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                            @foreach ($proiecteGroupedByStareContract as $stareContract)
-                                <th class="text-white culoare2 text-center">
-                                    <b class="fs-2">{{ $stareContract->total }}</b>
-                                </th>
-                            @endforeach
-                    </tbody>
-                </table>
+    <div class="row justify-content-center">
+        <div class="col-md-8 mb-3">
+            <div class="accordion" id="stareContractAccordion">
+                @foreach($proiecteByStareContract as $stare => $projects)
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-{{ Str::slug($stare ?? 'necunoscut') }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ Str::slug($stare ?? 'necunoscut') }}" aria-expanded="false" aria-controls="collapse-{{ Str::slug($stare ?? 'necunoscut') }}">
+                                <span class="me-auto">{{ $stare ?? '-' }}</span>
+                                <span class="badge bg-secondary">{{ $projects->count() }}</span>
+                            </button>
+                        </h2>
+                        <div id="collapse-{{ Str::slug($stare ?? 'necunoscut') }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ Str::slug($stare ?? 'necunoscut') }}" data-bs-parent="#stareContractAccordion">
+                            <div class="accordion-body">
+                                <ul class="mb-2">
+                                    @foreach($projects as $project)
+                                        <li>
+                                            <a href="{{ $project->path() }}">{{ $project->denumire_contract ?? '-' }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        </div> --}}
-
-        <div class="col-md-6 mb-3 text-center mx-auto">
-            <div class="table-responsive rounded">
-                <table class="table table-striped table-hover rounded">
-                    <thead class="text-white rounded">
-                    {{-- Column headers --}}
-                    <tr class="thead-danger" style="padding:2rem">
-                        <th class="text-white culoare2 text-center" style="width:70%">
-                        Stare proiect
-                        </th>
-                        <th class="text-white culoare2 text-center" style="width:30%">
-                        Total
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($proiecteGroupedByStareContract as $stareContract)
-                        <tr>
-                        <td class="" style="vertical-align:middle">
-                            {{ $stareContract->stare_contract ?? '-' }}
-                        </td>
-                        <td class="text-center">
-                            <b class="">{{ $stareContract->total }}</b>
-                        </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                </div>
         </div>
-
-
     </div>
 </div>
 
