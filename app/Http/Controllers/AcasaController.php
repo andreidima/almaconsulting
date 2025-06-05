@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use Carbon\Carbon;
 use App\Models\Proiect;
-use Illuminate\Support\Facades\DB;
 
 class AcasaController extends Controller
 {
@@ -22,16 +21,16 @@ class AcasaController extends Controller
         $proiecteThisMonth  = Proiect::whereDate('data_contract', '>=', $startOfThisMonth)->count();
         $proiecteLastMonth  = Proiect::whereBetween('data_contract', [$startOfLastMonth, $endOfLastMonth])->count();
 
-        // 2. Group projects by stare_contract (status) and get counts for each group
-        $proiecteGroupedByStareContract = Proiect::select('stare_contract', DB::raw('COUNT(*) as total'))
-            ->groupBy('stare_contract')
-            ->get();
+        // 2. Retrieve projects grouped by their status along with the counts
+        $proiecteByStareContract = Proiect::orderBy('stare_contract')
+            ->get()
+            ->groupBy('stare_contract');
 
         return view('acasa', compact(
             'allProiecteCount',
             'proiecteThisMonth',
             'proiecteLastMonth',
-            'proiecteGroupedByStareContract'
+            'proiecteByStareContract'
         ));
     }
 }

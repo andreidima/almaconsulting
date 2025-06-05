@@ -32,6 +32,7 @@ class ProiectController extends Controller
         $searchIntervalDataContract = trim($request->searchIntervalDataContract);
         $searchMembru = trim($request->searchMembru);
         $searchSubcontractant = trim($request->searchSubcontractant);
+        $searchStareContract = trim($request->stare_contract);
 
         $proiecte = Proiect::with('proiectTip', 'membri', 'subcontractanti', 'fisiere', 'emailuriTrimise')
             ->where('proiecte_tipuri_id', $proiectTip->id ?? null)
@@ -55,6 +56,9 @@ class ProiectController extends Controller
                     $q->where('nume', 'LIKE', "%{$searchSubcontractant}%");
                 });
             })
+            ->when($searchStareContract, function ($query, $searchStareContract) {
+                return $query->where('stare_contract', $searchStareContract);
+            })
             ->orderByRaw("
                 CASE
                     WHEN data_proces_verbal_predare_primire IS NULL THEN 0 ELSE 1
@@ -70,7 +74,16 @@ class ProiectController extends Controller
             ")
             ->simplePaginate(25);
 
-        return view('proiecte.index', compact('proiectTip', 'proiecte', 'searchDenumire', 'searchNrContract', 'searchIntervalDataContract', 'searchMembru', 'searchSubcontractant'));
+        return view('proiecte.index', compact(
+            'proiectTip',
+            'proiecte',
+            'searchDenumire',
+            'searchNrContract',
+            'searchIntervalDataContract',
+            'searchMembru',
+            'searchSubcontractant',
+            'searchStareContract'
+        ));
     }
 
     /**
