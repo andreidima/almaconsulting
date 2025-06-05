@@ -49,7 +49,7 @@
 
                     <div class="row">
                         <!-- Membri Section -->
-                        @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta']))
+                        @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta', 'achizitii']))
                             <div class="col-md-6 mb-3">
                                 <strong>Membri</strong>
                                 @if($proiect->membri->isNotEmpty())

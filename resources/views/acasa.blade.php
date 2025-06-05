@@ -5,7 +5,7 @@
     <div class="row justify-content-center mb-3">
         <div class="col-md-6 mb-3">
             <div class="card culoare2">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">Pagina principală</div>
 
                 <div class="card-body">
                     Bine ai venit <b>{{ auth()->user()->name ?? '' }}</b>!
@@ -95,7 +95,6 @@
                     </tbody>
                 </table>
                 </div>
-
         </div>
 
 

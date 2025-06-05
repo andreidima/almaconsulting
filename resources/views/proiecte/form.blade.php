@@ -101,7 +101,7 @@
     @endcan
 </div>
 
-@if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta']))
+@if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta', 'achizitii']))
     <div class="row mb-4 pt-2 rounded-3" style="border:1px solid #e9ecef; border-left:0.25rem #e66800 solid; background-color:#fff9f5">
         <div class="col-lg-12">
             <!-- Where we mount our MembriSelector Vue app -->

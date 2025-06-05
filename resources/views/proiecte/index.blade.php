@@ -33,7 +33,7 @@
                     <div class="col-lg-4">
                         <input type="text" class="form-control rounded-3" id="searchNrContract" name="searchNrContract" placeholder="Nr. Contract" value="{{ $searchNrContract }}">
                     </div>
-                    @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta']))
+                    @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta', 'achizitii']))
                         <div class="col-lg-4">
                             <input type="text" class="form-control rounded-3" id="searchMembru" name="searchMembru" placeholder="Membru" value="{{ $searchMembru }}">
                         </div>
@@ -98,7 +98,7 @@
                             <br>
                             <i class="fa-solid fa-file-signature"></i> Data Proces Verbal Predare-Primire
                         </th>
-                        @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta']))
+                        @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta', 'achizitii']))
                             <th class="text-white culoare2"><i class="fa-solid fa-user-group"></i> Membri</th>
                         @endif
                         @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'pug']))
@@ -129,7 +129,7 @@
                                 <br>
                                 {{ $proiect->data_proces_verbal_predare_primire?->format('d.m.Y') ?? '-' }}
                             </td>
-                            @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta']))
+                            @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'consultanta', 'achizitii']))
                                 <td>
                                     @if($proiect->membri->isNotEmpty())
                                         @foreach($proiect->membri as $membru)
