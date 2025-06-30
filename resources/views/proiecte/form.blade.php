@@ -1,5 +1,19 @@
 @csrf
 
+<div class="row mb-4 pt-2 rounded-3" style="border:1px solid #e9ecef; border-left:0.25rem #e66800 solid; background-color:#fff9f5">
+    <div class="col-lg-12 mb-2 d-flex align-items-center">
+        <label for="stare" class="mb-0 ps-3 pe-2">Stare</label>
+        <select name="stare" id="stare" class="form-control bg-white rounded-3" style="width: 200px">
+            <option value="">-- Selectează --</option>
+            <option value="activ" {{ old('stare', $proiect->stare ?? '') === 'activ' ? 'selected' : '' }}>Activ</option>
+            <option value="inchis" {{ old('stare', $proiect->stare ?? '') === 'inchis' ? 'selected' : '' }}>Închis</option>
+        </select>
+        <small class="form-text text-muted ps-3">
+            Când se schimbă statusul în "Închis", toți membrii sunt automat informați prin email.
+        </small>
+    </div>
+</div>
+
 <div id="datePicker" class="row mb-4 pt-2 rounded-3" style="border:1px solid #e9ecef; border-left:0.25rem darkcyan solid; background-color:rgb(241, 250, 250)">
     <div class="col-lg-12 mb-4">
         <label for="denumire_contract" class="mb-0 ps-3">Denumire Contract</label>

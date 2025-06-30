@@ -26,6 +26,7 @@ class ProiectRequest extends FormRequest
     {
         return [
             'proiecte_tipuri_id' => 'required|integer',
+            'stare' => 'nullable|in:activ,inchis',
             'denumire_contract' => 'nullable|string|max:1000',
             'nr_contract' => 'nullable|string|max:255',
             'data_contract' => 'nullable|date',

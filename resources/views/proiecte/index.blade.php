@@ -104,6 +104,9 @@
                         @if(in_array($proiectTip->slug, ['civile', 'apa-canal', 'drumuri', 'privati', 'pug']))
                             <th class="text-white culoare2"><i class="fa-solid fa-handshake"></i> Subcontractanți</th>
                         @endif
+                        <th class="text-white culoare2">
+                            <i class="fa-solid fa-toggle-on"></i> Stare
+                        </th>
                         <th class="text-white culoare2"><i class="fa-solid fa-calendar-check"></i> Fișiere</th>
                         <th class="text-white culoare2 text-end"><i class="fa-solid fa-cogs"></i> Acțiuni</th>
                     </tr>
@@ -205,6 +208,15 @@
                                     @endif
                                 </td>
                             @endif
+                            <td>
+                                <span class="
+                                    {{ $proiect->stare === 'activ'  ? 'text-success' : '' }}
+                                    {{ $proiect->stare === 'inchis' ? 'text-danger' : '' }}
+                                ">
+                                    {{ ucfirst($proiect->stare ?: '—') }}
+                                </span>
+                            </td>
+
                             <td>
                                 @if($proiect->fisiere->isNotEmpty())
                                     @foreach($proiect->fisiere as $fisier)

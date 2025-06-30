@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MemberAddedToProject;
 use App\Mail\MemberRemovedFromProject;
 use App\Mail\ProjectComentariiUpdated;
+use App\Mail\ProjectClosedNotification;
 
 class ProiectController extends Controller
 {
@@ -565,6 +566,78 @@ class ProiectController extends Controller
                 $errors[] = "Nu s-a putut trimite emailul pentru comentarii: " . $e->getMessage();
             }
         }
+
+
+        // Notify all members if the project was just closed.
+        if ($proiect->wasChanged('stare') && $proiect->stare === 'inchis') {
+            $membriToNotify = $proiect->membri()->get();
+            $validRecipients = [];
+
+            foreach ($membriToNotify as $membru) {
+                if ($membru && filter_var($membru->email, FILTER_VALIDATE_EMAIL)) {
+                    $validRecipients[] = [
+                        'id'    => $membru->id,
+                        'email' => $membru->email,
+                        'nume'  => $membru->nume,
+                    ];
+                } else {
+                    $errorMessage = $membru
+                        ? "Emailul membrului {$membru->nume} este invalid, motiv pentru care nu i s-a putut trimite email."
+                        : "Email invalid pentru un membru necunoscut.";
+                    $errors[] = $errorMessage;
+                    ProiectEmailTrimis::create([
+                        'proiect_id'       => $proiect->id,
+                        'destinatar_id'    => $membru ? $membru->id : 0,
+                        'destinatar_type'  => 'membru',
+                        'email_destinatar' => $membru->email ?? 'unknown',
+                        'email_subiect'    => "Aplicatie Alma Consulting - Proiectul {$proiect->denumire_contract} a fost închis",
+                        'email_mesaj'      => $errorMessage,
+                        'sent_at'          => now(),
+                        'error_code'       => "INVALID_EMAIL",
+                        'error_message'    => $errorMessage,
+                    ]);
+                }
+            }
+
+            if (!empty($validRecipients)) {
+                try {
+                    $mail = new ProjectClosedNotification($proiect);
+                    $mail->subject = "Aplicatie Alma Consulting - Proiectul {$proiect->denumire_contract} a fost închis";
+
+                    Mail::to(array_column($validRecipients, 'email'))->send($mail);
+
+                    foreach ($validRecipients as $recipient) {
+                        ProiectEmailTrimis::create([
+                            'proiect_id'       => $proiect->id,
+                            'destinatar_id'    => $recipient['id'],
+                            'destinatar_type'  => 'membru',
+                            'email_destinatar' => $recipient['email'],
+                            'email_subiect'    => $mail->subject,
+                            'email_mesaj'      => 'Notificare: Proiectul a fost închis.',
+                            'sent_at'          => now(),
+                            'error_code'       => null,
+                            'error_message'    => null,
+                        ]);
+                    }
+                } catch (\Exception $e) {
+                    foreach ($validRecipients as $recipient) {
+                        ProiectEmailTrimis::create([
+                            'proiect_id'       => $proiect->id,
+                            'destinatar_id'    => $recipient['id'],
+                            'destinatar_type'  => 'membru',
+                            'email_destinatar' => $recipient['email'],
+                            'email_subiect'    => $mail->subject,
+                            'email_mesaj'      => 'Notificare: Proiectul a fost închis.',
+                            'sent_at'          => now(),
+                            'error_code'       => $e->getCode(),
+                            'error_message'    => $e->getMessage(),
+                        ]);
+                    }
+                    $errors[] = "Nu s-a putut trimite emailul pentru închidere: " . $e->getMessage();
+                }
+            }
+        }
+
 
         // Optionally, flash errors to the session so they can be displayed in your Blade view.
         if (!empty($errors)) {

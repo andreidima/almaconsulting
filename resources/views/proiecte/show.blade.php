@@ -14,6 +14,17 @@
                 <div class="card-body border border-secondary p-4" style="border-radius: 0px 0px 40px 40px;">
                     <div class="row">
                         <div class="col-md-6 mb-3">
+                            <strong>Stare Proiect:</strong>
+                            <span class="
+                                {{ $proiect->stare === 'activ'  ? 'text-success' : '' }}
+                                {{ $proiect->stare === 'inchis' ? 'text-danger' : '' }}
+                            ">
+                            {{ ucfirst($proiect->stare ?: '—') }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <strong>Denumire Contract:</strong> {{ $proiect->denumire_contract }}
                         </div>
                         <div class="col-md-6 mb-3">
